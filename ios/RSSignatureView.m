@@ -11,12 +11,9 @@
 	CAShapeLayer *_border;
 	BOOL _loaded;
 	EAGLContext *_context;
-	UIButton *saveButton;
-	UIButton *clearButton;
 	UILabel *titleLabel;
 	BOOL _rotateClockwise;
 	BOOL _square;
-	BOOL _showNativeButtons;
 	BOOL _showTitleLabel;
 }
 
@@ -25,7 +22,6 @@
 
 - (instancetype)init
 {
-	_showNativeButtons = YES;
 	_showTitleLabel = YES;
 	if ((self = [super init])) {
 		if (self.showDashedBorder) {
@@ -83,34 +79,6 @@
 				//[titleLabel setBackgroundColor:[UIColor greenColor]];
 				[sign addSubview:titleLabel];
 			}
-
-			if (_showNativeButtons) {
-				//Save button
-				saveButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-				[saveButton setLineBreakMode:NSLineBreakByClipping];
-				[saveButton addTarget:self action:@selector(onSaveButtonPressed)
-				            forControlEvents:UIControlEventTouchUpInside];
-				[saveButton setTitle:@"Save" forState:UIControlStateNormal];
-
-				CGSize buttonSize = CGSizeMake(80, 55.0);
-
-				saveButton.frame = CGRectMake(sign.bounds.size.width - buttonSize.width,
-				                              0, buttonSize.width, buttonSize.height);
-				[saveButton setBackgroundColor:[UIColor colorWithRed:250/255.f green:250/255.f blue:250/255.f alpha:1.f]];
-				[sign addSubview:saveButton];
-
-
-				//Clear button
-				clearButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-				[clearButton setLineBreakMode:NSLineBreakByClipping];
-				[clearButton addTarget:self action:@selector(onClearButtonPressed)
-				             forControlEvents:UIControlEventTouchUpInside];
-				[clearButton setTitle:@"Reset" forState:UIControlStateNormal];
-
-				clearButton.frame = CGRectMake(0, 0, buttonSize.width, buttonSize.height);
-				[clearButton setBackgroundColor:[UIColor colorWithRed:250/255.f green:250/255.f blue:250/255.f alpha:1.f]];
-				[sign addSubview:clearButton];
-			}
 		}
 		else {
 
@@ -124,34 +92,6 @@
 				[titleLabel setTextColor:[UIColor colorWithRed:200/255.f green:200/255.f blue:200/255.f alpha:1.f]];
 				//[titleLabel setBackgroundColor:[UIColor greenColor]];
 				[sign addSubview:titleLabel];
-			}
-
-			if (_showNativeButtons) {
-				//Save button
-				saveButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-				[saveButton setTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(90))];
-				[saveButton setLineBreakMode:NSLineBreakByClipping];
-				[saveButton addTarget:self action:@selector(onSaveButtonPressed)
-				            forControlEvents:UIControlEventTouchUpInside];
-				[saveButton setTitle:@"Save" forState:UIControlStateNormal];
-
-				CGSize buttonSize = CGSizeMake(55, 80.0); //Width/Height is swapped
-
-				saveButton.frame = CGRectMake(sign.bounds.size.width - buttonSize.width, sign.bounds.size.height - buttonSize.height, buttonSize.width, buttonSize.height);
-				[saveButton setBackgroundColor:[UIColor colorWithRed:250/255.f green:250/255.f blue:250/255.f alpha:1.f]];
-				[sign addSubview:saveButton];
-
-				//Clear button
-				clearButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-				[clearButton setTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(90))];
-				[clearButton setLineBreakMode:NSLineBreakByClipping];
-				[clearButton addTarget:self action:@selector(onClearButtonPressed)
-				             forControlEvents:UIControlEventTouchUpInside];
-				[clearButton setTitle:@"Reset" forState:UIControlStateNormal];
-
-				clearButton.frame = CGRectMake(sign.bounds.size.width - buttonSize.width, 0, buttonSize.width, buttonSize.height);
-				[clearButton setBackgroundColor:[UIColor colorWithRed:250/255.f green:250/255.f blue:250/255.f alpha:1.f]];
-				[sign addSubview:clearButton];
 			}
 		}
 
@@ -171,25 +111,12 @@
 	_square = square;
 }
 
-- (void)setShowNativeButtons:(BOOL)showNativeButtons {
-	_showNativeButtons = showNativeButtons;
-}
-
 - (void)setShowTitleLabel:(BOOL)showTitleLabel {
 	_showTitleLabel = showTitleLabel;
 }
 
--(void) onSaveButtonPressed {
-	[self saveImage];
-}
-
 -(void) saveImage {
-	saveButton.hidden = YES;
-	clearButton.hidden = YES;
 	UIImage *signImage = [self.sign signatureImage: _rotateClockwise withSquare:_square];
-
-	saveButton.hidden = NO;
-	clearButton.hidden = NO;
 
 	NSError *error;
 
@@ -216,10 +143,6 @@
 		NSString *base64Encoded = [imageData base64EncodedStringWithOptions:0];
 		[self.manager publishSaveImageEvent: tempPath withEncoded:base64Encoded];
 	}
-}
-
--(void) onClearButtonPressed {
-	[self erase];
 }
 
 -(void) erase {

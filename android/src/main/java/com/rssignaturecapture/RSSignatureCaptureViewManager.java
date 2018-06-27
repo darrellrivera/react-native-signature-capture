@@ -19,7 +19,6 @@ public class RSSignatureCaptureViewManager extends ViewGroupManager<RSSignatureC
 
 	public static final String PROPS_SAVE_IMAGE_FILE="saveImageFileInExtStorage";
 	public static final String PROPS_VIEW_MODE = "viewMode";
-	public static final String PROPS_SHOW_NATIVE_BUTTONS="showNativeButtons";
 	public static final String PROPS_MAX_SIZE="maxSize";
 	public static final String PROPS_STROKE_COLOR="strokeColor";
 	public static final String PROPS_BACKGROUND_COLOR="backgroundColor";
@@ -51,15 +50,6 @@ public class RSSignatureCaptureViewManager extends ViewGroupManager<RSSignatureC
 		Log.d("setViewMode:", "" + viewMode);
 		if(view!=null){
 			view.setViewMode(viewMode);
-		}
-	}
-
-
-	@ReactProp(name = PROPS_SHOW_NATIVE_BUTTONS)
-	public void setPropsShowNativeButtons(RSSignatureCaptureMainView view, @Nullable Boolean showNativeButtons) {
-		Log.d("showNativeButtons:", "" + showNativeButtons);
-		if(view!=null){
-			view.setShowNativeButtons(showNativeButtons);
 		}
 	}
 

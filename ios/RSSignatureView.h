@@ -10,8 +10,6 @@
 @property (nonatomic, strong) RSSignatureViewManager *manager;
 @property (nonatomic, strong) UIColor *strokeColor;
 @property (nonatomic) BOOL *showDashedBorder;
--(void) onSaveButtonPressed;
--(void) onClearButtonPressed;
 -(void) saveImage;
 -(void) erase;
 @end

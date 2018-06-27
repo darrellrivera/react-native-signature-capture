@@ -21,23 +21,19 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Environment;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import java.lang.Boolean;
 
-public class RSSignatureCaptureMainView extends LinearLayout implements OnClickListener,RSSignatureCaptureView.SignatureCallback {
-  LinearLayout buttonsLayout;
+public class RSSignatureCaptureMainView extends LinearLayout implements RSSignatureCaptureView.SignatureCallback {
   RSSignatureCaptureView signatureView;
 
   Activity mActivity;
   int mOriginalOrientation;
   Boolean saveFileInExtStorage = false;
   String viewMode = "portrait";
-  Boolean showNativeButtons = true;
   Boolean showTitleLabel = true;
   int maxSize = 500;
 
@@ -49,9 +45,7 @@ public class RSSignatureCaptureMainView extends LinearLayout implements OnClickL
 
     this.setOrientation(LinearLayout.VERTICAL);
     this.signatureView = new RSSignatureCaptureView(context,this);
-    // add the buttons and signature views
-    this.buttonsLayout = this.buttonsLayout();
-    this.addView(this.buttonsLayout);
+    // add the signature view
     this.addView(signatureView);
 
     setLayoutParams(new android.view.ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -72,16 +66,6 @@ public class RSSignatureCaptureMainView extends LinearLayout implements OnClickL
     }
   }
 
-  public void setShowNativeButtons(Boolean showNativeButtons) {
-    this.showNativeButtons = showNativeButtons;
-    if (showNativeButtons) {
-      Log.d("Added Native Buttons", "Native Buttons:" + showNativeButtons);
-      buttonsLayout.setVisibility(View.VISIBLE);
-    } else {
-      buttonsLayout.setVisibility(View.GONE);
-    }
-  }
-
   public void setMaxSize(int size) {
     this.maxSize = size;
   }
@@ -92,48 +76,6 @@ public class RSSignatureCaptureMainView extends LinearLayout implements OnClickL
 
   public void setBackgroundColor(Integer color) {
     this.signatureView.setBackgroundColor(color);
-  }
-
-  private LinearLayout buttonsLayout() {
-
-    // create the UI programatically
-    LinearLayout linearLayout = new LinearLayout(this.getContext());
-    Button saveBtn = new Button(this.getContext());
-    Button clearBtn = new Button(this.getContext());
-
-    // set orientation
-    linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-    linearLayout.setBackgroundColor(Color.WHITE);
-
-    // set texts, tags and OnClickListener
-    saveBtn.setText("Save");
-    saveBtn.setTag("Save");
-    saveBtn.setOnClickListener(this);
-
-    clearBtn.setText("Reset");
-    clearBtn.setTag("Reset");
-    clearBtn.setOnClickListener(this);
-
-    linearLayout.addView(saveBtn);
-    linearLayout.addView(clearBtn);
-
-    // return the whoe layout
-    return linearLayout;
-  }
-
-  // the on click listener of 'save' and 'clear' buttons
-  @Override public void onClick(View v) {
-    String tag = v.getTag().toString().trim();
-
-    // save the signature
-    if (tag.equalsIgnoreCase("save")) {
-      this.saveImage();
-    }
-
-    // empty the canvas
-    else if (tag.equalsIgnoreCase("Reset")) {
-      this.signatureView.clearSignature();
-    }
   }
 
   /**
