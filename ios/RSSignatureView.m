@@ -23,17 +23,7 @@
 - (instancetype)init
 {
 	_showTitleLabel = YES;
-	if ((self = [super init])) {
-		if (self.showDashedBorder) {
-			_border = [CAShapeLayer layer];
-			_border.strokeColor = [UIColor blackColor].CGColor;
-			_border.fillColor = nil;
-			_border.lineDashPattern = @[@4, @2];
-
-			[self.layer addSublayer:_border];
-		}
-	}
-
+	self = [super init];
 	return self;
 }
 
@@ -97,10 +87,6 @@
 
 	}
 	_loaded = true;
-    if (self.showDashedBorder) {
-        _border.path = [UIBezierPath bezierPathWithRect:self.bounds].CGPath;
-        _border.frame = self.bounds;
-    }
 }
 
 - (void)setRotateClockwise:(BOOL)rotateClockwise {

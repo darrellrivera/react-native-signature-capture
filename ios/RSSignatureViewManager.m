@@ -15,8 +15,6 @@ RCT_EXPORT_VIEW_PROPERTY(square, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(showTitleLabel, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(backgroundColor, UIColor)
 RCT_EXPORT_VIEW_PROPERTY(strokeColor, UIColor)
-RCT_EXPORT_VIEW_PROPERTY(showDashedLine, BOOL)
-RCT_EXPORT_VIEW_PROPERTY(showDashedBorder, BOOL)
 
 
 -(dispatch_queue_t) methodQueue

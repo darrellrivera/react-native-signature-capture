@@ -98,8 +98,6 @@ SignatureCapture.propTypes = {
     maxSize: PropTypes.number,
     backgroundColor: PropTypes.string,
     strokeColor: PropTypes.string,
-    showDashedLine: PropTypes.bool,
-    showDashedBorder: PropTypes.bool,
 };
 
 SignatureCapture.defaultProps = {
