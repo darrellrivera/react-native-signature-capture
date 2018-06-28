@@ -1,43 +1,34 @@
 
 'use strict';
 
-var ReactNative = require('react-native');
-var React = require('react');
-var PropTypes = require('prop-types');
-var {
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import ReactNative, {
     requireNativeComponent,
     View,
     UIManager,
     DeviceEventEmitter
-} = ReactNative;
+} from 'react-native';
 
-class SignatureCapture extends React.Component {
-
-    constructor() {
-        super();
-        this.onChange = this.onChange.bind(this);
-        this.subscriptions = [];
+export default class SignatureCapture extends Component {
+    static propTypes = {
+      ...View.propTypes,
+        onDragEvent: PropTypes.func,
+        strokeColor: PropTypes.string,
     }
 
-    onChange(event) {
-        if(event.nativeEvent.dragged){
-            if (!this.props.onDragEvent) {
-                return;
-            }
-            this.props.onDragEvent({
-                dragged: event.nativeEvent.dragged
-            });
-        }
+    static defaultProps = {
+        onDragEvent: () => {},
+        strokeColor: 'black',
     }
 
     componentDidMount() {
-        if (this.props.onDragEvent) {
-            let sub = DeviceEventEmitter.addListener(
-                'onDragEvent',
-                this.props.onDragEvent
-            );
-            this.subscriptions.push(sub);
-        }
+        this.subscriptions = [];
+        let sub = DeviceEventEmitter.addListener(
+            'onDragEvent',
+            this.props.onDragEvent
+        );
+        this.subscriptions.push(sub);
     }
 
     componentWillUnmount() {
@@ -45,32 +36,32 @@ class SignatureCapture extends React.Component {
         this.subscriptions = [];
     }
 
-    render() {
-        return (
-            <RSSignatureView {...this.props} onChange={this.onChange} />
-        );
+    onChange = (event) => {
+        if(event.nativeEvent.dragged){
+            this.props.onDragEvent({
+                dragged: event.nativeEvent.dragged
+            });
+        }
     }
 
-    resetImage() {
+    resetImage = () => {
         UIManager.dispatchViewManagerCommand(
             ReactNative.findNodeHandle(this),
             UIManager.RSSignatureView.Commands.resetImage,
             [],
         );
     }
-}
 
-SignatureCapture.propTypes = {
-  ...View.propTypes,
-    strokeColor: PropTypes.string,
-};
-
-SignatureCapture.defaultProps = {
-    strokeColor: 'black',
+    render() {
+        return (
+            <RSSignatureView
+                {...this.props}
+                onChange={this.onChange}
+            />
+        );
+    }
 }
 
 var RSSignatureView = requireNativeComponent('RSSignatureView', SignatureCapture, {
     nativeOnly: { onChange: true }
 });
-
-module.exports = SignatureCapture;
