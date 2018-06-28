@@ -20,18 +20,6 @@ class SignatureCapture extends React.Component {
     }
 
     onChange(event) {
-
-        if(event.nativeEvent.pathName){
-
-            if (!this.props.onSaveEvent) {
-                return;
-            }
-            this.props.onSaveEvent({
-                pathName: event.nativeEvent.pathName,
-                encoded: event.nativeEvent.encoded,
-            });
-        }
-
         if(event.nativeEvent.dragged){
             if (!this.props.onDragEvent) {
                 return;
@@ -43,14 +31,6 @@ class SignatureCapture extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.onSaveEvent) {
-            let sub = DeviceEventEmitter.addListener(
-                'onSaveEvent',
-                this.props.onSaveEvent
-            );
-            this.subscriptions.push(sub);
-        }
-
         if (this.props.onDragEvent) {
             let sub = DeviceEventEmitter.addListener(
                 'onDragEvent',
@@ -71,14 +51,6 @@ class SignatureCapture extends React.Component {
         );
     }
 
-    saveImage() {
-        UIManager.dispatchViewManagerCommand(
-            ReactNative.findNodeHandle(this),
-            UIManager.RSSignatureView.Commands.saveImage,
-            [],
-        );
-    }
-
     resetImage() {
         UIManager.dispatchViewManagerCommand(
             ReactNative.findNodeHandle(this),
@@ -90,7 +62,6 @@ class SignatureCapture extends React.Component {
 
 SignatureCapture.propTypes = {
   ...View.propTypes,
-    saveImageFileInExtStorage: PropTypes.bool,
     backgroundColor: PropTypes.string,
     strokeColor: PropTypes.string,
 };

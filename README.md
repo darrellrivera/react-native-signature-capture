@@ -1,9 +1,7 @@
 # react-native-signature-capture
 
 ## About this
-React Native library for capturing signature
-
-User would sign on the app and when you press the save button it returns the base64 encoded png
+React Native library for drawing signature
 
 ### iOS
 <img src="http://i.giphy.com/3oEduIyWb48Ws3bSuc.gif" />
@@ -103,16 +101,12 @@ class CustomComponent extends Component {
 
 ### Properties
 
-+ **saveImageFileInExtStorage** : Make this props true, if you want to save the image file in external storage. Default is false. Warning: Image file will be visible in gallery or any other image browsing app
 
 ### Methods
-
-+ **saveImage()** : when called it will save the image and returns the base 64 encoded string on onSaveEvent() callback
 
 + **resetImage()** : when called it will clear the image on the canvas
 
 ### Callback Props
-+ **onSaveEvent** : Triggered when saveImage() is called, which return Base64 Encoded String and image file path.
 
 + **onDragEvent** : Triggered when user marks his signature on the canvas. This will not be called when the user does not perform any action on canvas.
 
@@ -147,16 +141,9 @@ class RNSignatureExample extends Component {
                 <SignatureCapture
                     style={[{flex:1},styles.signature]}
                     ref="sign"
-                    onSaveEvent={this._onSaveEvent}
                     onDragEvent={this._onDragEvent}
-                    saveImageFileInExtStorage={false}/>
 
                 <View style={{ flex: 1, flexDirection: "row" }}>
-                    <TouchableHighlight style={styles.buttonStyle}
-                        onPress={() => { this.saveSign() } } >
-                        <Text>Save</Text>
-                    </TouchableHighlight>
-
                     <TouchableHighlight style={styles.buttonStyle}
                         onPress={() => { this.resetSign() } } >
                         <Text>Reset</Text>
@@ -168,19 +155,10 @@ class RNSignatureExample extends Component {
         );
     }
 
-    saveSign() {
-        this.refs["sign"].saveImage();
-    }
-
     resetSign() {
         this.refs["sign"].resetImage();
     }
 
-    _onSaveEvent(result) {
-        //result.encoded - for the base64 encoded png
-        //result.pathName - for the file path name
-        console.log(result);
-    }
     _onDragEvent() {
          // This callback will be called when the user enters signature
         console.log("dragged");

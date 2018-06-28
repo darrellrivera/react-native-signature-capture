@@ -32,7 +32,6 @@ public class RSSignatureCaptureMainView extends LinearLayout implements RSSignat
 
   Activity mActivity;
   int mOriginalOrientation;
-  Boolean saveFileInExtStorage = false;
 
   public RSSignatureCaptureMainView(Context context, Activity activity) {
     super(context);
@@ -49,10 +48,6 @@ public class RSSignatureCaptureMainView extends LinearLayout implements RSSignat
         ViewGroup.LayoutParams.MATCH_PARENT));
   }
 
-  public void setSaveFileInExtStorage(Boolean saveFileInExtStorage) {
-    this.saveFileInExtStorage = saveFileInExtStorage;
-  }
-
   public void setStrokeColor(Integer color) {
     this.signatureView.setStrokeColor(color);
   }
@@ -60,61 +55,6 @@ public class RSSignatureCaptureMainView extends LinearLayout implements RSSignat
   public void setBackgroundColor(Integer color) {
     this.signatureView.setBackgroundColor(color);
   }
-
-  /**
-   * save the signature to an sd card directory
-   */
-  final void saveImage() {
-
-    String root = Environment.getExternalStorageDirectory().toString();
-
-    // the directory where the signature will be saved
-    File myDir = new File(root + "/saved_signature");
-
-    // make the directory if it does not exist yet
-    if (!myDir.exists()) {
-      myDir.mkdirs();
-    }
-
-    // set the file name of your choice
-    String fname = "signature.png";
-
-    // in our case, we delete the previous file, you can remove this
-    File file = new File(myDir, fname);
-    if (file.exists()) {
-      file.delete();
-    }
-
-    try {
-
-      Log.d("React Signature", "Save file-======:" + saveFileInExtStorage);
-      // save the signature
-      if (saveFileInExtStorage) {
-        FileOutputStream out = new FileOutputStream(file);
-        this.signatureView.getSignature().compress(Bitmap.CompressFormat.PNG, 90, out);
-        out.flush();
-        out.close();
-      }
-
-
-      ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-      Bitmap bitmap = this.signatureView.getSignature();
-      bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-
-
-      byte[] byteArray = byteArrayOutputStream.toByteArray();
-      String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
-
-      WritableMap event = Arguments.createMap();
-      event.putString("pathName", file.getAbsolutePath());
-      event.putString("encoded", encoded);
-      ReactContext reactContext = (ReactContext) getContext();
-      reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(getId(), "topChange", event);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
 
   public void reset() {
     if (this.signatureView != null) {

@@ -43,36 +43,6 @@
 	_loaded = true;
 }
 
--(void) saveImage {
-	UIImage *signImage = [self.sign signatureImage];
-
-	NSError *error;
-
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *documentsDirectory = [paths firstObject];
-	NSString *tempPath = [documentsDirectory stringByAppendingFormat:@"/signature.png"];
-
-	//remove if file already exists
-	if ([[NSFileManager defaultManager] fileExistsAtPath:tempPath]) {
-		[[NSFileManager defaultManager] removeItemAtPath:tempPath error:&error];
-		if (error) {
-			NSLog(@"Error: %@", error.debugDescription);
-		}
-	}
-
-	// Convert UIImage object into NSData (a wrapper for a stream of bytes) formatted according to PNG spec
-	NSData *imageData = UIImagePNGRepresentation(signImage);
-	BOOL isSuccess = [imageData writeToFile:tempPath atomically:YES];
-	if (isSuccess) {
-		NSFileManager *man = [NSFileManager defaultManager];
-		NSDictionary *attrs = [man attributesOfItemAtPath:tempPath error: NULL];
-		//UInt32 result = [attrs fileSize];
-
-		NSString *base64Encoded = [imageData base64EncodedStringWithOptions:0];
-		[self.manager publishSaveImageEvent: tempPath withEncoded:base64Encoded];
-	}
-}
-
 -(void) erase {
 	[self.sign erase];
 }

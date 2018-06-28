@@ -45,7 +45,6 @@ class ExampleApp extends Component {
         </TouchableOpacity>
         <SignatureView
           ref={r => this._signatureView = r}
-          onSave={this._onSave.bind(this)}
         />
       </View>
     );
@@ -53,13 +52,6 @@ class ExampleApp extends Component {
 
   _showSignatureView() {
     this._signatureView.show(true);
-  }
-
-  _onSave(result) {
-    const base64String = `data:image/png;base64,${result.encoded}`;
-    this.setState({data: base64String});
-
-    this._signatureView.show(false);
   }
 }
 

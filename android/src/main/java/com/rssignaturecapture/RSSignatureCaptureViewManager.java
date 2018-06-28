@@ -17,12 +17,10 @@ import javax.annotation.Nullable;
 
 public class RSSignatureCaptureViewManager extends ViewGroupManager<RSSignatureCaptureMainView> {
 
-	public static final String PROPS_SAVE_IMAGE_FILE="saveImageFileInExtStorage";
 	public static final String PROPS_STROKE_COLOR="strokeColor";
 	public static final String PROPS_BACKGROUND_COLOR="backgroundColor";
 
-	public static final int COMMAND_SAVE_IMAGE = 1;
-	public static final int COMMAND_RESET_IMAGE = 2;
+	public static final int COMMAND_RESET_IMAGE = 1;
 
 	private RSSignatureCaptureContextModule mContextModule;
 
@@ -33,14 +31,6 @@ public class RSSignatureCaptureViewManager extends ViewGroupManager<RSSignatureC
 	@Override
 	public String getName() {
 		return "RSSignatureView";
-	}
-
-	@ReactProp(name = PROPS_SAVE_IMAGE_FILE)
-	public void setSaveImageFileInExtStorage(RSSignatureCaptureMainView view, @Nullable Boolean saveFile) {
-		Log.d("setFileInExtStorage:", "" + saveFile);
-		if(view!=null){
-			view.setSaveFileInExtStorage(saveFile);
-		}
 	}
 
 	@ReactProp(name = PROPS_BACKGROUND_COLOR, customType = "Color")
@@ -69,8 +59,6 @@ public class RSSignatureCaptureViewManager extends ViewGroupManager<RSSignatureC
 	public Map<String,Integer> getCommandsMap() {
 		Log.d("React"," View manager getCommandsMap:");
 		return MapBuilder.of(
-				"saveImage",
-				COMMAND_SAVE_IMAGE,
 				"resetImage",
 				COMMAND_RESET_IMAGE);
 	}
@@ -83,10 +71,6 @@ public class RSSignatureCaptureViewManager extends ViewGroupManager<RSSignatureC
 		Assertions.assertNotNull(view);
 		Assertions.assertNotNull(args);
 		switch (commandType) {
-			case COMMAND_SAVE_IMAGE: {
-				view.saveImage();
-				return;
-			}
 			case COMMAND_RESET_IMAGE: {
 				view.reset();
 				return;

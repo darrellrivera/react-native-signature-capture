@@ -200,7 +200,6 @@ static PPSSignaturePoint ViewPointToGL(CGPoint viewPoint, CGRect bounds, GLKVect
 - (void)erase {
 	length = 0;
 	dotsLength = 0;
-	self.hasSignature = NO;
 
 	[self setNeedsDisplay];
 }
@@ -256,18 +255,6 @@ static PPSSignaturePoint ViewPointToGL(CGPoint viewPoint, CGRect bounds, GLKVect
 
 	return scaledImage;
 }
-
-- (UIImage *)signatureImage
-{
-	if (!self.hasSignature)
-		return nil;
-
-	UIImage *snapshot = [self snapshot];
-	[self erase];
-	UIImage *signatureImg = snapshot;
-	return signatureImg;
-}
-
 
 #pragma mark - Gesture Recognizers
 
@@ -346,7 +333,6 @@ static PPSSignaturePoint ViewPointToGL(CGPoint viewPoint, CGRect bounds, GLKVect
 		addVertex(&length, startPoint);
 		addVertex(&length, previousVertex);
 
-		self.hasSignature = YES;
 		[self.manager publishDraggedEvent];
 
 	} else if ([p state] == UIGestureRecognizerStateChanged) {

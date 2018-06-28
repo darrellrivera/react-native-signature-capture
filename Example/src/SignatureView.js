@@ -20,10 +20,6 @@ const modalViewStyle = {
 
 class SignatureView extends Component {
 
-  static propTypes = {
-    onSave: PropTypes.func
-  }
-
   constructor(props) {
     super(props);
 
@@ -50,7 +46,6 @@ class SignatureView extends Component {
           </View>
           <SignatureCapture
             onDragEvent={this._onDragEvent.bind(this)}
-            onSaveEvent={this._onSaveEvent.bind(this)}
           />
         </View>
       </Modal>
@@ -68,12 +63,6 @@ class SignatureView extends Component {
   _onDragEvent() {
     // This callback will be called when the user enters signature
    console.log("dragged");
-  }
-
-  _onSaveEvent(result) {
-    //result.encoded - for the base64 encoded png
-    //result.pathName - for the file path name
-    this.props.onSave && this.props.onSave(result);
   }
 }
 
