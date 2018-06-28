@@ -45,7 +45,6 @@ class ExampleApp extends Component {
         </TouchableOpacity>
         <SignatureView
           ref={r => this._signatureView = r}
-          rotateClockwise={!!true}
           onSave={this._onSave.bind(this)}
         />
       </View>

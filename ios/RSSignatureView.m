@@ -11,9 +11,6 @@
 	CAShapeLayer *_border;
 	BOOL _loaded;
 	EAGLContext *_context;
-	UILabel *titleLabel;
-	BOOL _rotateClockwise;
-	BOOL _showTitleLabel;
 }
 
 @synthesize sign;
@@ -21,26 +18,14 @@
 
 - (instancetype)init
 {
-	_showTitleLabel = YES;
 	self = [super init];
 	return self;
-}
-
-- (void) didRotate:(NSNotification *)notification {
-	int ori=1;
-	UIDeviceOrientation currOri = [[UIDevice currentDevice] orientation];
-	if ((currOri == UIDeviceOrientationLandscapeLeft) || (currOri == UIDeviceOrientationLandscapeRight)) {
-		ori=0;
-	}
 }
 
 - (void)layoutSubviews
 {
 	[super layoutSubviews];
 	if (!_loaded) {
-
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotate:)
-																								 name:UIDeviceOrientationDidChangeNotification object:nil];
 
 		_context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
 
@@ -54,50 +39,12 @@
 		sign.manager = manager;
 
 		[self addSubview:sign];
-
-		if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
-
-			if (_showTitleLabel) {
-				titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, 24)];
-				[titleLabel setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height - 120)];
-
-				[titleLabel setText:@"x_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _"];
-				[titleLabel setLineBreakMode:NSLineBreakByClipping];
-				[titleLabel setTextAlignment: NSTextAlignmentCenter];
-				[titleLabel setTextColor:[UIColor colorWithRed:200/255.f green:200/255.f blue:200/255.f alpha:1.f]];
-				//[titleLabel setBackgroundColor:[UIColor greenColor]];
-				[sign addSubview:titleLabel];
-			}
-		}
-		else {
-
-			if (_showTitleLabel) {
-				titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.height - 80, 24)];
-				[titleLabel setCenter:CGPointMake(40, self.bounds.size.height/2)];
-				[titleLabel setTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(90))];
-				[titleLabel setText:@"x_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _"];
-				[titleLabel setLineBreakMode:NSLineBreakByClipping];
-				[titleLabel setTextAlignment: NSTextAlignmentLeft];
-				[titleLabel setTextColor:[UIColor colorWithRed:200/255.f green:200/255.f blue:200/255.f alpha:1.f]];
-				//[titleLabel setBackgroundColor:[UIColor greenColor]];
-				[sign addSubview:titleLabel];
-			}
-		}
-
 	}
 	_loaded = true;
 }
 
-- (void)setRotateClockwise:(BOOL)rotateClockwise {
-	_rotateClockwise = rotateClockwise;
-}
-
-- (void)setShowTitleLabel:(BOOL)showTitleLabel {
-	_showTitleLabel = showTitleLabel;
-}
-
 -(void) saveImage {
-	UIImage *signImage = [self.sign signatureImage: _rotateClockwise];
+	UIImage *signImage = [self.sign signatureImage];
 
 	NSError *error;
 

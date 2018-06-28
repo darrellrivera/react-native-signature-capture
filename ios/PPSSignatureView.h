@@ -13,6 +13,5 @@
 - (void)erase;
 
 - (UIImage *) signatureImage;
-- (UIImage *) signatureImage: (BOOL) rotatedImage;
 
 @end
