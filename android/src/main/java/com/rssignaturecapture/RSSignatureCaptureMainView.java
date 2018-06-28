@@ -33,7 +33,6 @@ public class RSSignatureCaptureMainView extends LinearLayout implements RSSignat
   Activity mActivity;
   int mOriginalOrientation;
   Boolean saveFileInExtStorage = false;
-  int maxSize = 500;
 
   public RSSignatureCaptureMainView(Context context, Activity activity) {
     super(context);
@@ -52,10 +51,6 @@ public class RSSignatureCaptureMainView extends LinearLayout implements RSSignat
 
   public void setSaveFileInExtStorage(Boolean saveFileInExtStorage) {
     this.saveFileInExtStorage = saveFileInExtStorage;
-  }
-
-  public void setMaxSize(int size) {
-    this.maxSize = size;
   }
 
   public void setStrokeColor(Integer color) {
@@ -103,8 +98,8 @@ public class RSSignatureCaptureMainView extends LinearLayout implements RSSignat
 
 
       ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-      Bitmap resizedBitmap = getResizedBitmap(this.signatureView.getSignature());
-      resizedBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+      Bitmap bitmap = this.signatureView.getSignature();
+      bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
 
 
       byte[] byteArray = byteArrayOutputStream.toByteArray();
@@ -118,23 +113,6 @@ public class RSSignatureCaptureMainView extends LinearLayout implements RSSignat
     } catch (Exception e) {
       e.printStackTrace();
     }
-  }
-
-  public Bitmap getResizedBitmap(Bitmap image) {
-    Log.d("React Signature","maxSize:"+maxSize);
-    int width = image.getWidth();
-    int height = image.getHeight();
-
-    float bitmapRatio = (float) width / (float) height;
-    if (bitmapRatio > 1) {
-      width = maxSize;
-      height = (int) (width / bitmapRatio);
-    } else {
-      height = maxSize;
-      width = (int) (height * bitmapRatio);
-    }
-
-    return Bitmap.createScaledBitmap(image, width, height, true);
   }
 
 

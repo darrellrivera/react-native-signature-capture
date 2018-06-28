@@ -105,8 +105,6 @@ class CustomComponent extends Component {
 
 + **saveImageFileInExtStorage** : Make this props true, if you want to save the image file in external storage. Default is false. Warning: Image file will be visible in gallery or any other image browsing app
 
-+ **maxSize**  : sets the max size of the image maintains aspect ratio, default is 500
-
 ### Methods
 
 + **saveImage()** : when called it will save the image and returns the base 64 encoded string on onSaveEvent() callback
