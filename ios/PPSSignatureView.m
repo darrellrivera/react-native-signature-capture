@@ -274,13 +274,9 @@ static PPSSignaturePoint ViewPointToGL(CGPoint viewPoint, CGRect bounds, GLKVect
 
 - (UIImage *)signatureImage
 {
-	return [self signatureImage:false withSquare:false];
+	return [self signatureImage:false];
 }
 - (UIImage *)signatureImage: (BOOL) rotatedImage
-{
-	return [self signatureImage:rotatedImage withSquare:false];
-}
-- (UIImage *)signatureImage: (BOOL) rotatedImage withSquare:(BOOL) square
 {
 	if (!self.hasSignature)
 		return nil;
@@ -290,34 +286,16 @@ static PPSSignaturePoint ViewPointToGL(CGPoint viewPoint, CGRect bounds, GLKVect
 	[self erase];
 
 	if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
-		//signature
-		if (square) {
-			signatureImg = [self reduceImage:snapshot toSize: CGSizeMake(400.0f, 400.0f)];
-		}
-		else {
-			signatureImg = snapshot;
-		}
+		signatureImg = snapshot;
 	}
 	else {
 		//rotate iphone signature - iphone's signature screen is always landscape
-
 		if (rotatedImage) {
-			if (square) {
-				UIImage *rotatedImg = [self rotateImage:snapshot clockwise:false];
-				signatureImg = [self reduceImage:rotatedImg toSize: CGSizeMake(400.0f, 400.0f)];
-			}
-			else {
-				UIImage *rotatedImg = [self rotateImage:snapshot clockwise:false];
-				signatureImg = rotatedImg;
-			}
+			UIImage *rotatedImg = [self rotateImage:snapshot clockwise:false];
+			signatureImg = rotatedImg;
 		}
 		else {
-			if (square) {
-				signatureImg = [self reduceImage:snapshot toSize: CGSizeMake(400.0f, 400.0f)];
-			}
-			else {
-				signatureImg = snapshot;
-			}
+			signatureImg = snapshot;
 		}
 	}
 

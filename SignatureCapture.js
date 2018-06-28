@@ -91,7 +91,6 @@ class SignatureCapture extends React.Component {
 SignatureCapture.propTypes = {
   ...View.propTypes,
     rotateClockwise: PropTypes.bool,
-    square: PropTypes.bool,
     saveImageFileInExtStorage: PropTypes.bool,
     viewMode: PropTypes.string,
     showTitleLabel: PropTypes.bool,

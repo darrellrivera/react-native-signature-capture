@@ -13,7 +13,6 @@
 	EAGLContext *_context;
 	UILabel *titleLabel;
 	BOOL _rotateClockwise;
-	BOOL _square;
 	BOOL _showTitleLabel;
 }
 
@@ -93,16 +92,12 @@
 	_rotateClockwise = rotateClockwise;
 }
 
-- (void)setSquare:(BOOL)square {
-	_square = square;
-}
-
 - (void)setShowTitleLabel:(BOOL)showTitleLabel {
 	_showTitleLabel = showTitleLabel;
 }
 
 -(void) saveImage {
-	UIImage *signImage = [self.sign signatureImage: _rotateClockwise withSquare:_square];
+	UIImage *signImage = [self.sign signatureImage: _rotateClockwise];
 
 	NSError *error;
 
