@@ -1,12 +1,9 @@
-#import "PPSSignatureView.h"
 #import <UIKit/UIKit.h>
-#import <React/RCTView.h>
-#import <React/RCTBridge.h>
+#import <React/UIView+React.h>
 
 @class RSSignatureViewManager;
 
-@interface RSSignatureView : RCTView
-@property (nonatomic, strong) PPSSignatureView *sign;
+@interface RSSignatureView : UIView
 @property (nonatomic, strong) RSSignatureViewManager *manager;
 @property (nonatomic, strong) UIColor *strokeColor;
 -(void) erase;

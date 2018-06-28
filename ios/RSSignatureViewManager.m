@@ -18,11 +18,14 @@ RCT_EXPORT_VIEW_PROPERTY(strokeColor, UIColor)
 	return dispatch_get_main_queue();
 }
 
--(UIView *) view
+-(UIView *)view
 {
-	self.signView = [[RSSignatureView alloc] init];
-	self.signView.manager = self;
-	return signView;
+  if (!self.signView) {
+  	self.signView = [[RSSignatureView alloc] initWithFrame:CGRectZero];
+    self.signView.manager = self;
+  }
+
+  return self.signView;
 }
 
 // This methods needs to be called from the main thread so the
