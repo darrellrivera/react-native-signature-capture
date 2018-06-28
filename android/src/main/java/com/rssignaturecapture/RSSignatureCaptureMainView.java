@@ -33,7 +33,6 @@ public class RSSignatureCaptureMainView extends LinearLayout implements RSSignat
   Activity mActivity;
   int mOriginalOrientation;
   Boolean saveFileInExtStorage = false;
-  String viewMode = "portrait";
   int maxSize = 500;
 
   public RSSignatureCaptureMainView(Context context, Activity activity) {
@@ -53,16 +52,6 @@ public class RSSignatureCaptureMainView extends LinearLayout implements RSSignat
 
   public void setSaveFileInExtStorage(Boolean saveFileInExtStorage) {
     this.saveFileInExtStorage = saveFileInExtStorage;
-  }
-
-  public void setViewMode(String viewMode) {
-    this.viewMode = viewMode;
-
-    if (viewMode.equalsIgnoreCase("portrait")) {
-      mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-    } else if (viewMode.equalsIgnoreCase("landscape")) {
-      mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-    }
   }
 
   public void setMaxSize(int size) {

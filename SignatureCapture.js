@@ -91,7 +91,6 @@ class SignatureCapture extends React.Component {
 SignatureCapture.propTypes = {
   ...View.propTypes,
     saveImageFileInExtStorage: PropTypes.bool,
-    viewMode: PropTypes.string,
     maxSize: PropTypes.number,
     backgroundColor: PropTypes.string,
     strokeColor: PropTypes.string,

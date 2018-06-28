@@ -18,7 +18,6 @@ import javax.annotation.Nullable;
 public class RSSignatureCaptureViewManager extends ViewGroupManager<RSSignatureCaptureMainView> {
 
 	public static final String PROPS_SAVE_IMAGE_FILE="saveImageFileInExtStorage";
-	public static final String PROPS_VIEW_MODE = "viewMode";
 	public static final String PROPS_MAX_SIZE="maxSize";
 	public static final String PROPS_STROKE_COLOR="strokeColor";
 	public static final String PROPS_BACKGROUND_COLOR="backgroundColor";
@@ -42,14 +41,6 @@ public class RSSignatureCaptureViewManager extends ViewGroupManager<RSSignatureC
 		Log.d("setFileInExtStorage:", "" + saveFile);
 		if(view!=null){
 			view.setSaveFileInExtStorage(saveFile);
-		}
-	}
-
-	@ReactProp(name = PROPS_VIEW_MODE)
-	public void setViewMode(RSSignatureCaptureMainView view, @Nullable String viewMode) {
-		Log.d("setViewMode:", "" + viewMode);
-		if(view!=null){
-			view.setViewMode(viewMode);
 		}
 	}
 

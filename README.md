@@ -105,8 +105,6 @@ class CustomComponent extends Component {
 
 + **saveImageFileInExtStorage** : Make this props true, if you want to save the image file in external storage. Default is false. Warning: Image file will be visible in gallery or any other image browsing app
 
-+ **viewMode** : "portrait" or "landscape" change the screen orientation based on boolean value
-
 + **maxSize**  : sets the max size of the image maintains aspect ratio, default is 500
 
 ### Methods
@@ -153,8 +151,7 @@ class RNSignatureExample extends Component {
                     ref="sign"
                     onSaveEvent={this._onSaveEvent}
                     onDragEvent={this._onDragEvent}
-                    saveImageFileInExtStorage={false}
-                    viewMode={"portrait"}/>
+                    saveImageFileInExtStorage={false}/>
 
                 <View style={{ flex: 1, flexDirection: "row" }}>
                     <TouchableHighlight style={styles.buttonStyle}
