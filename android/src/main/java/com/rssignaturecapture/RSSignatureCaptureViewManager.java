@@ -18,7 +18,6 @@ import javax.annotation.Nullable;
 public class RSSignatureCaptureViewManager extends ViewGroupManager<RSSignatureCaptureMainView> {
 
 	public static final String PROPS_STROKE_COLOR="strokeColor";
-	public static final String PROPS_BACKGROUND_COLOR="backgroundColor";
 
 	public static final int COMMAND_RESET_IMAGE = 1;
 
@@ -31,14 +30,6 @@ public class RSSignatureCaptureViewManager extends ViewGroupManager<RSSignatureC
 	@Override
 	public String getName() {
 		return "RSSignatureView";
-	}
-
-	@ReactProp(name = PROPS_BACKGROUND_COLOR, customType = "Color")
-	public void setBackgroundColor(RSSignatureCaptureMainView view, @Nullable Integer color) {
-		Log.d("setBackgroundColor:", "" + color);
-		if(view!=null) {
-			view.setBackgroundColor(color);
-		}
 	}
 
 	@ReactProp(name = PROPS_STROKE_COLOR, customType = "Color")

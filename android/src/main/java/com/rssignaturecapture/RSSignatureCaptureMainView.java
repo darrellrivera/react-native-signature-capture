@@ -52,10 +52,6 @@ public class RSSignatureCaptureMainView extends LinearLayout implements RSSignat
     this.signatureView.setStrokeColor(color);
   }
 
-  public void setBackgroundColor(Integer color) {
-    this.signatureView.setBackgroundColor(color);
-  }
-
   public void reset() {
     if (this.signatureView != null) {
       this.signatureView.clearSignature();

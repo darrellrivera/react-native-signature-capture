@@ -62,13 +62,11 @@ class SignatureCapture extends React.Component {
 
 SignatureCapture.propTypes = {
   ...View.propTypes,
-    backgroundColor: PropTypes.string,
     strokeColor: PropTypes.string,
 };
 
 SignatureCapture.defaultProps = {
     strokeColor: 'black',
-    backgroundColor: 'white',
 }
 
 var RSSignatureView = requireNativeComponent('RSSignatureView', SignatureCapture, {
